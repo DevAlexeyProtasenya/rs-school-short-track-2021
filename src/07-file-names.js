@@ -13,8 +13,20 @@
  * the output should be ["file", "file(1)", "image", "file(1)(1)", "file(2)"]
  *
  */
-function renameFiles(/* names */) {
-  throw new Error('Not implemented');
+function renameFiles(names) {
+  const matches = new Map();
+  const result = names.map((element) => {
+    if (matches.get(element) === undefined) {
+      matches.set(element, 1);
+    } else {
+      matches.set(element, matches.get(element) + 1);
+      // eslint-disable-next-line no-param-reassign
+      element = `${element}(${matches.get(element) - 1})`;
+      matches.set(element, 1);
+    }
+    return element;
+  });
+  return result;
 }
 
 module.exports = renameFiles;
